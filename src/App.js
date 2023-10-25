@@ -1,23 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { Title } from "./components/Title/Title";
+import { Todo } from "./components/Todo";
+import { TodoInput } from "./components/TodoInput";
+import { TodoList } from "./components/TodoList";
+
+
 
 function App() {
+  const [todos, setTodos] = useState([
+    {
+      id: 1,
+      title: 'Watch the next Marvel Movie',
+      completed: false,
+    },
+    {
+      id: 2,
+      title: 'Record the next Video',
+      completed: false,
+    },
+    {
+      id: 3,
+      title: 'Wash the dishes',
+      completed: false,
+    },
+    {
+      id: 4,
+      title: 'Study 2 hours',
+      completed: false,
+    }
+  ])
+
+  const addTodo = (title) => {
+    const lastId = todos.length > 0 ? todos[todos.length -1].id : 1;
+    const newTodo = {
+      id: lastId +1,
+      title,
+      completed: false
+    }
+    const todoList = [...todos];
+    todoList.push(newTodo);
+    setTodos(todoList);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='bg-gray-900 min-h-screen font-inter h-full text-gray-100 flex items-center justify-center py-20 px-5'>
+    <div className='container flex flex-col max-w-xl'>
+        <Title />
+        <TodoInput addTodo={addTodo} />
+        <TodoList todos={todos} />
+          
+      </div>
     </div>
   );
 }
