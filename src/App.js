@@ -1,8 +1,11 @@
+
 import { useEffect, useState } from "react";
 import { Title } from "./components/Title/Title";
 import { Todo } from "./components/Todo";
 import { TodoInput } from "./components/TodoInput";
 import { TodoList } from "./components/TodoList";
+import { Footer } from "./components/Footer";
+
 
 
 
@@ -63,7 +66,7 @@ function App() {
 
   const handleClearCompleted = () => {
     const updatedList = todos.filter(todo => !todo.completed );
-    setActiveFilter(updatedList);
+    setTodos(updatedList);
   }
 
   const showAllTodos = () => {
@@ -85,16 +88,18 @@ function App() {
       const activeTodos = todos.filter(todo => todo.completed === false)
       setFilteredTodos(activeTodos)
     }else if(activeFilter === 'completed'){
-      const showCompletedTodos = todos.filter(todo => todo.completed === true)
+      const completedTodos = todos.filter(todo => todo.completed === true)
+      setFilteredTodos(completedTodos)
     }
   }, [activeFilter, todos])
   return (
-    <div className='bg-gray-900 min-h-screen font-inter h-full text-gray-100 flex items-center justify-center py-20 px-5'>
+    <div className='bg-blue-900 min-h-screen font-inter h-full text-gray-100 flex items-center justify-center py-20 px-5'>
     <div className='container flex flex-col max-w-xl'>
         <Title />
         <TodoInput addTodo={addTodo} />
         <TodoList 
           todos={filteredTodos}
+          activeFilter={activeFilter}
           handleSetCompleted={handleSetCompleted}
           handleDelete={handleDelete}
           showAllTodos={showAllTodos}
@@ -102,7 +107,7 @@ function App() {
           showCompletedTodos={showCompletedTodos}
           handleClearCompleted={handleClearCompleted}
         />
-          
+        <Footer />
       </div>
     </div>
   );
